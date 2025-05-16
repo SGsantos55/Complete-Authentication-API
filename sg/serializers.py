@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from sg.models import User
+from rest_framework import status
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -24,3 +25,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         # password = validated_data.pop('password')
         # validated_data.pop('password2')
         return User.objects.create_user( **validated_data)
+        # status=status.HTTP_201_CREATED
+        
+   
+class UserLoginSerializer(serializers.ModelSerializer):
+    email=serializers.EmailField(max_length=255)
+    class Meta:
+        model=User
+        fields=['email','password']     
