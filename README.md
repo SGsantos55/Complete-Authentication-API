@@ -1,2 +1,2 @@
 # Complete-Authentication-API
-This project provides a robust JWT-based authentication system built with Django REST Framework (DRF). It includes user registration, login, password reset, and change password functionality. The API also integrates email verification to ensure secure user account management.
+This project offers a secure JWT-based authentication system using Django REST Framework. It supports user registration, login, password reset, change password, and email verification for safe account management.
