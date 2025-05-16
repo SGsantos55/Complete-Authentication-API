@@ -4,10 +4,11 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from sg.serializers import UserRegistrationSerializer, UserLoginSerializer
+from sg.serializers import UserRegistrationSerializer, UserLoginSerializer,UserProfileSerializer
 from django.contrib.auth import authenticate
 from .renderers import CustomJSONRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 #Generate Tokens manually
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -46,3 +47,13 @@ class UserLoginView(APIView):
                 return Response({'non_field_errors': ['Email or Password is not valid']}, status=status.HTTP_404_NOT_FOUND)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+class UserProfileView(APIView):
+    renderer_classes = [CustomJSONRenderer]
+    permission_classes = [IsAuthenticated]
+    def get(self,request,format=None):
+        serializer=UserProfileSerializer(request.user)
+    
+        return Response(serializer.data,status=status.HTTP_200_OK)
